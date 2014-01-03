@@ -1,0 +1,16 @@
+[
+{
+  "modid": "bindingcraft",
+  "name": "BindingCraft",
+  "description": "A binding Mod",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["Riderj"],
+  "credits": "Riderj for the concept, and development of the mod.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

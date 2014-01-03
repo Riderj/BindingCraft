@@ -1,0 +1,11 @@
+#Item localization
+item.rune.name=Rune
+item.binding_cream.name=Binding Cream
+item.infusion_crystal.name=Infusion Crystal
+
+#Block localization
+tile.hellish_dirt.name=Hellish Dirt
+tile.energyvein.name=Energy Vein Block
+
+#Creative Tab localization
+itemGroup.tabBindingCraft=Binding Craft
