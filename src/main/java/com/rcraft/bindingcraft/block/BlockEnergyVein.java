@@ -2,24 +2,32 @@ package com.rcraft.bindingcraft.block;
 
 import java.util.Random;
 
-import com.rcraft.bindingcraft.client.particle.EntityEnergyVeinFX;
-
+import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityFX;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.EnumHelper;
+
+import com.rcraft.bindingcraft.client.particle.EntityEnergyVeinFX;
+import com.rcraft.bindingcraft.item.LoadItems;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 
 public class BlockEnergyVein extends BlockMain {
 
-	EffectRenderer effect;
-	Minecraft mc;
+	private boolean minedByCrystal = false;
+
 	public BlockEnergyVein(int par1, Material blockMaterial) {
 		super(par1, blockMaterial);
 		this.setLightValue(1.0F);
+		this.setHardness(5.0F);
 	}
 	@SideOnly(value=Side.CLIENT)
 	public void randomDisplayTick(World world, int x, int y, int z, Random random) {
@@ -78,5 +86,57 @@ public class BlockEnergyVein extends BlockMain {
 	        		Minecraft.getMinecraft().effectRenderer.addEffect(entityfx);
 	            }
 	        }
+	    }
+	 
+	 
+	 	@Override
+	 	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player){
+	 		if(!world.isRemote){
+	 			ItemStack itemInUse = player.inventory.getCurrentItem();
+	 			if(itemInUse != null){
+			 		System.out.println(itemInUse.itemID);
+			 		if(itemInUse.itemID == LoadItems.InfusionCrystal.itemID){
+			 			minedByCrystal = true;
+			 			this.setHardness(.025F);
+			 		}else{
+			 			minedByCrystal = false;
+			 			this.setHardness(5.0F);
+			 		}
+	 			}
+	 		}
+	 	}
+	 	
+	 	@Override
+	 	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata){
+	 		if(!world.isRemote){
+		 		if(minedByCrystal == true){
+		 		}
+	 		}
+	 	}
+	 	
+	 	  /**
+	     * Returns the ID of the items to drop on destruction.
+	     */
+	 	@Override
+	    public int idDropped(int metadata, Random par2Random, int fortune)
+	    {
+	 		
+	 		/*
+	 		 * When we get the essences put in I want to allow this block to randomly drop an essence, and every other block you mine. Have a 
+	 		 * different rate (e.g: 1/100)
+	 		 */
+	 		if(!minedByCrystal){
+	 			return LoadItems.EnergyShard.itemID;
+	 		}
+	 		return -1;
+	    }
+
+	    /**
+	     * Returns the quantity of items to drop on block destruction.
+	     */
+	 	@Override
+	    public int quantityDropped(Random par1Random)
+	    {
+	        return 1 + par1Random.nextInt(3);
 	    }
 }
