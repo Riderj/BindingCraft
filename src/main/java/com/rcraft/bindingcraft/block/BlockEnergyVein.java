@@ -38,7 +38,7 @@ public class BlockEnergyVein extends BlockMain {
 	}
 	
 	
-	
+	@SideOnly(value = Side.CLIENT)
 	 private void sparkle(World par1World, int par2, int par3, int par4)
 	    {
 	        Random random = par1World.rand;
@@ -91,19 +91,17 @@ public class BlockEnergyVein extends BlockMain {
 	 
 	 	@Override
 	 	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player){
-	 		if(!world.isRemote){
-	 			ItemStack itemInUse = player.inventory.getCurrentItem();
-	 			if(itemInUse != null){
-			 		System.out.println(itemInUse.itemID);
-			 		if(itemInUse.itemID == LoadItems.InfusionCrystal.itemID){
-			 			minedByCrystal = true;
-			 			this.setHardness(.025F);
-			 		}else{
-			 			minedByCrystal = false;
-			 			this.setHardness(5.0F);
-			 		}
-	 			}
-	 		}
+ 			ItemStack itemInUse = player.inventory.getCurrentItem();
+ 			if(itemInUse != null){
+		 		System.out.println(itemInUse.itemID);
+		 		if(itemInUse.itemID == LoadItems.InfusionCrystal.itemID){
+		 			minedByCrystal = true;
+		 			this.setHardness(.025F);
+		 		}else{
+		 			minedByCrystal = false;
+		 			this.setHardness(5.0F);
+		 		}
+ 			}
 	 	}
 	 	
 	 	@Override
